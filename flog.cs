@@ -1,10 +1,17 @@
+/**
+* Flog is a super-simple threadsafe .NET trace/assert tool, whose output
+*	is directed to a plain text log file. Flog is free software provided 
+*	under the MIT license.
+*
+*	See LICENSE file for full text of the license.
+*	Copyright 2010 Dan Newcome.
+*/
+
 using System;
 using System.IO;
 using System.Configuration;
 
 /**
-* Flog - a super-simple threadsafe trace/assert to file
-*
 * Specify log file in app.config otherwise Flog will do nothing. 
 * Primary goal is to make this safe so that it should never throw 
 * an exception or cause the host program to fail.
