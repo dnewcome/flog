@@ -30,6 +30,7 @@ public class Flog
 	private static TextWriter logger;
 	private static bool ms_initialized = false;
 	private static bool ms_flush = true;
+	private static bool ms_useConsole = false;
 	
 	/**
 	* All initialization and configuration is done in the type initializer.
@@ -37,6 +38,21 @@ public class Flog
 	* remainder of the process lifetime.
 	*/
 	static Flog() {
+		try {
+			string console = ConfigurationManager.AppSettings["useConsole"];
+			if( !String.IsNullOrEmpty( console ) ) {
+				bool useConsole = Convert.ToBoolean( console );
+				if( useConsole == true ) {
+					// if console is not available, WriteLine() should throw.
+					// this keeps us from setting useConsole to true
+					Console.WriteLine( "Flog set to log to console" );
+					ms_useConsole = true;
+					ms_initialized = true;
+				}
+			}
+		}
+		catch {}
+		
 		try {
 			string filename = ConfigurationManager.AppSettings["flogFilename"];
 			if( !String.IsNullOrEmpty( filename ) ) {
@@ -70,6 +86,9 @@ public class Flog
 			logger.WriteLine( DateTime.Now.ToString() + " - " + message );
 			if( ms_flush == true ) {
 				logger.Flush();
+			}
+			if( ms_useConsole == true ) {
+				Console.WriteLine( DateTime.Now.ToString() + " - " + message );
 			}
 		}
 	}
