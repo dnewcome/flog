@@ -7,6 +7,8 @@ public class Program
 		Flog.WriteLine( "trace enabled" );
 		Flog.Assert( true, "assertion passed" );
 		Flog.Assert( false, "assertion failed" );
+		
+		Flog.Log( "WARN", "Program.Main()", "this is a warning message" );
 		Console.ReadLine();
 	}
 }

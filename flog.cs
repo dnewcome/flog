@@ -47,7 +47,6 @@ public class Flog
 					// this keeps us from setting useConsole to true
 					Console.WriteLine( "Flog set to log to console" );
 					ms_useConsole = true;
-					ms_initialized = true;
 				}
 			}
 		}
@@ -81,15 +80,22 @@ public class Flog
 		}
 	}
 		
+	// convenience to avoid uneccessary string concatenation if logging is off
+	public static void Log( string severity, string loggername, string message ) {
+		if( ms_initialized == true || ms_useConsole ) { 
+			WriteLine( severity + " " + loggername + " " + message );
+		}
+	}
+	
 	public static void WriteLine( string message ) {
 		if( ms_initialized == true ) {
 			logger.WriteLine( DateTime.Now.ToString() + " - " + message );
 			if( ms_flush == true ) {
 				logger.Flush();
 			}
-			if( ms_useConsole == true ) {
+		}
+		if( ms_useConsole == true ) {
 				Console.WriteLine( DateTime.Now.ToString() + " - " + message );
-			}
 		}
 	}
 }
