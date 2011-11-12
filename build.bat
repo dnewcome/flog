@@ -1,15 +1,10 @@
-:: assuming 4.0 compiler is available
-set pointversion=1.0.0
+set msbuild=C:\Windows\Microsoft.NET\Framework64\v4.0.30319\MSBuild.exe
+set PointVersion=1.0.0
 
-:: set msbuild=C:\Windows\Microsoft.NET\Framework\v4.0.30319\msbuild.exe
-set msbuild=C:\Windows\Microsoft.NET\Framework64\v4.0.30319\msbuild.exe
+set outpathprop=/property:OutputPath=release\%PointVersion%\2.0
+%msbuild% /property:Configuration=Debug /property:TargetFrameworkVersion=v3.5 %outpathprop%\Debug flog.csproj
+%msbuild% /property:Configuration=Release /property:TargetFrameworkVersion=v3.5 %outpathprop%\Release flog.csproj
 
-set projfile=flog.csproj
-
-:: note that we MUST specify /t:rebuild otherwise just changing the target framework isn't enough to 
-:: force uptodate logic to rebuild the project. We'll end up with 2 identical builds of whatever is first
-%msbuild% %projfile% /p:Configuration=Debug /p:TargetFrameworkVersion=v4.0 /p:PointVersion=%pointversion% /t:rebuild
-%msbuild% %projfile% /p:Configuration=Release /p:TargetFrameworkVersion=v4.0 /p:PointVersion=%pointversion% /t:rebuild
- 
-%msbuild% %projfile% /p:Configuration=Debug /p:TargetFrameworkVersion=v2.0 /p:PointVersion=%pointversion% /t:rebuild
-%msbuild% %projfile% /p:Configuration=Release /p:TargetFrameworkVersion=v2.0 /p:PointVersion=%pointversion% /t:rebuild
+set outpathprop=/property:OutputPath=release\%PointVersion%\4.0
+%msbuild% /property:Configuration=Debug /property:TargetFrameworkVersion=v4.0 %outpathprop%\Debug flog.csproj
+%msbuild% /property:Configuration=Release /property:TargetFrameworkVersion=v4.0 %outpathprop%\Release flog.csproj
