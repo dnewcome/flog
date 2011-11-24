@@ -1,0 +1,15 @@
+*.user
+*.suo
+
+# asterisk allows us to override individual files under lib later
+bin/*
+Bin/*
+lib/*
+
+obj/
+Obj/
+
+# explicitly include these files even though they are under dirs
+# that we excluded previously. Note the * pattern match for dirs.
+!deps.bat
+!refresh.bat
