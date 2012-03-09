@@ -16,6 +16,7 @@ logger to have embedded in your program to be enabled when you need it.
 Configuration is done through appSettings section of app.config.
 Flog has no required configuration settings. If no configuration is given, Flog
 is completely disabled, and no file/console accesses will be performed.
+
     flogFilename (optional) - relative or absolute path to output file
     flogFlush (optional) - set to false to disable flush after each write
     useConsole (optional) - direct output to console
