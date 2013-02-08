@@ -1,27 +1,16 @@
 using System;
 using System.Threading;
-using Djn;
+using log4net;
+using log4net.Config;
+using log4net.Appender;
 
-public class Program 
-{
+[assembly: log4net.Config.XmlConfigurator(ConfigFileExtension="log4net",Watch=true)]
+public class Program {
+	private static readonly ILog logger = LogManager.GetLogger("speedtest");
 	public static void Main() {
-		PerfTest();
+		logger.Info("working");
+		// Perf( "x" );
 		ThreadTest();
-	}
-
-	private static void PerfTest() {
-		Flog.WriteLine( "trace enabled" );
-		Flog.Assert( true, "assertion passed" );
-		Flog.Assert( false, "assertion failed" );
-		
-		Flog.Log( "WARN", "Program.Main()", "this is a warning message" );
-
-		// Perf( "Testing logging performance" ); // 15ms log to file, flush enabled
-		Perf( "x" ); // 11ms logging to file flush enabled
-		Flog.Flush = false;
-
-		Flog.WriteLine( "disabling flush" );
-		Perf( "x" ); // 6ms logging to file flush disabled
 	}
 
 	private static void ThreadTest() {
@@ -33,7 +22,6 @@ public class Program
 
 		Thread thread3 = new Thread(new ThreadStart(Worker) );
 		thread3.Start();
-
 
 		thread1.Join();
 		thread2.Join();
@@ -48,9 +36,9 @@ public class Program
 		System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
 		sw.Start();
 		for( int i = 0; i < 1000; i++ ) {
-			Flog.WriteLine( msg );
+			logger.Info(msg);
 		}
 		sw.Stop();
-		Flog.WriteLine( "Elapsed time " + sw.ElapsedMilliseconds );
+		logger.Info( "Elapsed time " + sw.ElapsedMilliseconds );
 	}
 }
